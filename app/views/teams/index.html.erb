@@ -1,0 +1,16 @@
+<h1>All Current Teams</h1>
+
+<table>
+  <tr>
+    <th>League</th>
+    <th>Season</th>
+    <th>Team Name</th>
+  </tr>
+  <% @teams.each do |team| %>
+    <tr>
+      <th><%= team.season.league.name %></th>
+      <th><%= team.season.name %></th>
+      <th><%= team.name %></th>
+    </tr>
+  <% end %>
+</table>
