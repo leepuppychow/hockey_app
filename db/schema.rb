@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_30_022704) do
+ActiveRecord::Schema.define(version: 2021_05_30_024759) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "assists", force: :cascade do |t|
+    t.bigint "player_id", null: false
+    t.bigint "goal_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["goal_id"], name: "index_assists_on_goal_id"
+    t.index ["player_id"], name: "index_assists_on_player_id"
+  end
 
   create_table "games", force: :cascade do |t|
     t.integer "home_score"
@@ -26,6 +35,15 @@ ActiveRecord::Schema.define(version: 2021_05_30_022704) do
     t.index ["away_team_id"], name: "index_games_on_away_team_id"
     t.index ["home_team_id"], name: "index_games_on_home_team_id"
     t.index ["season_id"], name: "index_games_on_season_id"
+  end
+
+  create_table "goals", force: :cascade do |t|
+    t.bigint "player_id", null: false
+    t.bigint "game_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["game_id"], name: "index_goals_on_game_id"
+    t.index ["player_id"], name: "index_goals_on_player_id"
   end
 
   create_table "leagues", force: :cascade do |t|
@@ -63,9 +81,13 @@ ActiveRecord::Schema.define(version: 2021_05_30_022704) do
     t.index ["league_id"], name: "index_teams_on_league_id"
   end
 
+  add_foreign_key "assists", "goals"
+  add_foreign_key "assists", "players"
   add_foreign_key "games", "seasons"
   add_foreign_key "games", "teams", column: "away_team_id"
   add_foreign_key "games", "teams", column: "home_team_id"
+  add_foreign_key "goals", "games"
+  add_foreign_key "goals", "players"
   add_foreign_key "players", "teams"
   add_foreign_key "teams", "leagues"
 end
