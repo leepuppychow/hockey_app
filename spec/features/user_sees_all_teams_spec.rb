@@ -10,8 +10,6 @@ describe "User sees all Teams" do
 
       visit "/teams"
 
-      save_and_open_page
-
       expect(page).to have_content(nhl.name)
       expect(page).to have_content(season_1.name)
       expect(page).to have_content(team_1.name)
