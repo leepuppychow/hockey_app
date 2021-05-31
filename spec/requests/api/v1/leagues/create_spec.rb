@@ -11,8 +11,6 @@ describe "Leagues API" do
 
     expect(response.status).to eq 201
     expect(league["name"]).to eq "BBAHL - C division"
-    expect(league["created_at"]).to be_a(String)
-    expect(league["updated_at"]).to be_a(String)
   end
 
   it "league name is required in payload" do
