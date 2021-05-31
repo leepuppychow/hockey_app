@@ -5,6 +5,14 @@ class Api::V1::LeaguesController < ApiController
     render json: League.all, status: 200
   end
 
+  def show
+    if @league
+      render json: @league, status: 200
+    else
+      render json: {:error => "Error finding hockey league #{params[:id]}"}, status: 404
+    end
+  end
+
   def create
     league = League.new(league_params)
     if league.save
