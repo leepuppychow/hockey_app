@@ -4,7 +4,10 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :leagues
+      resources :leagues do
+        resources :seasons, only: [:create, :update, :destroy]
+      end
     end
   end
+
 end
