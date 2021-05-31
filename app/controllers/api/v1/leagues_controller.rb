@@ -2,7 +2,10 @@ class Api::V1::LeaguesController < ApiController
   before_action :find_league, except: [:index, :create]
 
   def index
-    render json: League.includes(seasons: [:teams]).all, include: '**', status: 200
+    render json: League.includes(seasons: [:teams]).all,
+      each_serializer: LeagueSerializer,
+      include: '**',
+      status: 200
   end
 
   def show
