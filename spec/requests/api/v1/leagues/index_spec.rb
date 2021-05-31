@@ -11,6 +11,6 @@ describe "Leagues API" do
     leagues =  JSON.parse(response.body)
 
     expect(leagues.count).to eq(3)
-    expect(leagues.first["name"]).to be_a(String)
+    expect(leagues.first["name"]).to eq("NHL")
   end
 end
