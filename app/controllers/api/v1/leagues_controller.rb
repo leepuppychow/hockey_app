@@ -1,4 +1,6 @@
 class Api::V1::LeaguesController < ApiController
+  before_action :find_league, except: [:index, :create]
+
   def index
     render json: League.all, status: 200
   end
@@ -12,7 +14,19 @@ class Api::V1::LeaguesController < ApiController
     end
   end
 
+  def update
+    if @league && !league_params.empty?
+      @league.update(league_params)
+      render json: @league, status: 200
+    else
+      render json: {:error => "Error updating hockey league: #{@league.id}"}, status: 400
+    end
+  end
+
   private
+    def find_league
+      @league ||= League.find_by(id: params[:id])
+    end
 
     def league_params
       params.permit(:name)
