@@ -23,6 +23,15 @@ class Api::V1::LeaguesController < ApiController
     end
   end
 
+  def destroy
+    if @league
+      @league.destroy
+      render json: {}, status: 204
+    else
+      render json: {:error => "Error deleting hockey league #{params[:id]}"}, status: 404
+    end
+  end
+
   private
     def find_league
       @league ||= League.find_by(id: params[:id])
