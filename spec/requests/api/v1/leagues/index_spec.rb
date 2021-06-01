@@ -10,7 +10,7 @@ describe "Leagues API" do
 
     get '/api/v1/leagues'
 
-    leagues =  JSON.parse(response.body)
+    leagues = JSON.parse(response.body)
 
     expect(leagues.count).to eq 2
     expect(leagues.first["name"]).to eq "NHL"
