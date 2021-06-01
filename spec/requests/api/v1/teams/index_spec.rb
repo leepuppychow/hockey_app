@@ -24,4 +24,9 @@ describe "Teams API" do
     expect(blues_json["name"]).to eq blues.name
     expect(goons_json["name"]).to eq "Las Vegas Golden Knights"
   end
+
+  it "will return 404 if season is not found" do
+    get "/api/v1/seasons/0/teams"
+    expect(response.status).to eq 404
+  end
 end
