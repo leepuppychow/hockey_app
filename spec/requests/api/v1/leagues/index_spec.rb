@@ -5,12 +5,13 @@ describe "Leagues API" do
     league_1 = League.create!(name: "NHL")
     season_1 = Season.create!(name: "2020-2021", league: league_1)
     team_1 = Team.create!(name: "Colorado Avalanche", season: season_1)
+    mack = Player.create!(name: "Nathan MacKinnon", team: team_1)
     team_2 = Team.create!(name: "Las Vegas Golden Knights", season: season_1)
     league_2 = League.create!(name: "AHL")
 
     get '/api/v1/leagues'
 
-    leagues =  JSON.parse(response.body)
+    leagues = JSON.parse(response.body)
 
     expect(leagues.count).to eq 2
     expect(leagues.first["name"]).to eq "NHL"
@@ -19,6 +20,8 @@ describe "Leagues API" do
     
     avs, goons = leagues.first["seasons"].first["teams"]
     expect(avs["name"]).to eq "Colorado Avalanche"
+    # Check to make sure TeamSerializer is being used (not the DeepTeamSerializer)
+    expect(avs["players"]).to eq nil
     expect(goons["name"]).to eq "Las Vegas Golden Knights"
   end
 end
