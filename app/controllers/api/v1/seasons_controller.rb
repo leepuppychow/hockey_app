@@ -13,11 +13,20 @@ class Api::V1::SeasonsController < ApiController
   end
   
   def update
-    if @league.seasons.include?(@season)
+    if season_in_league?
       @season.update(season_params)
       render json: @season, status: 200
     else
       render json: {:error => "Error updating season"}, status: 400
+    end
+  end
+
+  def destroy
+    if season_in_league?
+      @season.destroy
+      render json: "", status: 204
+    else
+      render json: {:error => "Error deleting season #{params[:id]}"}, status: 400
     end
   end
 
@@ -35,6 +44,10 @@ class Api::V1::SeasonsController < ApiController
       if not @season
         render json: {:error => "Cannot find season #{params[:id]}"}, status: 404
       end
+    end
+
+    def season_in_league?
+      @league.seasons.include?(@season)
     end
 
     def season_params
