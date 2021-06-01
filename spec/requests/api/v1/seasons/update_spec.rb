@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "Seasons API" do
-  it "PUT /api/v1/leagues/:league_id/seasons should update season within a league" do
+  it "PUT /api/v1/leagues/:league_id/seasons/:id should update season within a league" do
     league = League.create!(name: "NHL")
     season = Season.create!(name: "2020-2021", league: league)
     
