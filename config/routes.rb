@@ -7,7 +7,10 @@ Rails.application.routes.draw do
       resources :leagues do
         resources :seasons, only: [:create, :update, :destroy]
       end
+
+      resources :seasons, only: [:show] do
+        resources :teams
+      end
     end
   end
-
 end
