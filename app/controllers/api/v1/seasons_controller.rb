@@ -34,14 +34,14 @@ class Api::V1::SeasonsController < ApiController
 
     def find_league
       @league ||= League.find_by(id: params[:league_id])
-      if not @league
+      if !@league
         render json: {:error => "Cannot find league #{params[:league_id]}"}, status: 404
       end
     end
 
     def find_season
       @season ||= Season.find_by(id: params[:id])
-      if not @season
+      if !@season
         render json: {:error => "Cannot find season #{params[:id]}"}, status: 404
       end
     end
