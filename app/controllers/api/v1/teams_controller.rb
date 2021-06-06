@@ -6,6 +6,16 @@ class Api::V1::TeamsController < ApiController
     render json: teams, status: 200, each_serializer: DeepTeamSerializer
   end
 
+  def create
+    team = Team.new(team_params)
+    team.season = @season
+    if team.save
+      render json: team, status: 201
+    else
+      render json: {:error => "Error creating new team"}, status: 400
+    end
+  end
+
   private
 
     def find_season
@@ -13,5 +23,9 @@ class Api::V1::TeamsController < ApiController
       if not @season
         render json: {:error => "Cannot find season #{params[:season_id]}"}, status: 404
       end
+    end
+
+    def team_params
+      params.permit(:name)
     end
 end
